@@ -37,8 +37,8 @@ jobs:
         path: /root/.m2
         key: test-${{ hashFiles('backend/deps.edn') }}
         restore-keys: test-
-    - run: clojure -A:dev -m ru.bia-tech.statsbit.migration test
-    - run: clojure -A:dev:run-tests
+    - run: clojure -M:dev -m ru.bia-tech.statsbit.migration test
+    - run: clojure -M:dev:run-tests
   build:
     runs-on: ubuntu-latest
     container: clojure:openjdk-11-tools-deps-1.10.1.739
@@ -49,5 +49,5 @@ jobs:
         path: /root/.m2
         key: build-${{ hashFiles('backend/deps.edn') }}
         restore-keys: build-
-    - run: clojure -A:prod:depstar
+    - run: clojure -X:prod:depstar
     # "build/app.jar"
