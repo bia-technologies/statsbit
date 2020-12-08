@@ -1,0 +1,21 @@
+apiVersion: 1
+
+deleteDatasources:
+- name: PostgreSQL
+
+datasources:
+- name: PostgreSQL
+  type: postgres
+  url: $STATSBIT_GRAFANA_DATASOURCE_URL
+  database: $STATSBIT_GRAFANA_DATASOURCE_DATABASE
+  user: $STATSBIT_GRAFANA_DATASOURCE_USER
+  isDefault: true
+  secureJsonData:
+    password: $STATSBIT_GRAFANA_DATASOURCE_PASSWORD
+  jsonData:
+    sslmode: disable
+    postgresVersion: 1100
+    # https://github.com/grafana/grafana/issues/20347
+    maxOpenConns: 4 #$STATSBIT_GRAFANA_DATASOURCE_MAX_OPEN_CONNS
+    maxIdleConns: 2 #$STATSBIT_GRAFANA_DATASOURCE_MAX_IDLE_CONNS
+    connMaxLifetime: ${STATSBIT_GRAFANA_DATASOURCE_CONN_MAX_LIFETIME}

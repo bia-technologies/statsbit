@@ -1,0 +1,15 @@
+apiVersion: 1
+
+providers:
+- name: main
+  folder: Main
+  folderUid: main-xxx
+  type: file
+  options:
+    path: /etc/grafana/dashboards/main
+- name: app
+  folder: App
+  folderUid: app-xxxx
+  type: file
+  options:
+    path: /etc/grafana/dashboards/app
