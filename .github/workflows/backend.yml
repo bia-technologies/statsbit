@@ -50,4 +50,7 @@ jobs:
         key: build-${{ hashFiles('backend/deps.edn') }}
         restore-keys: build-
     - run: clojure -X:prod:depstar
-    # "build/app.jar"
+    - uses: actions/upload-artifact@v2
+      with:
+        name: app.jar
+        path: backend/build/app.jar
