@@ -1,0 +1,33 @@
+version: '3.7'
+
+x-db: &db
+  image: timescale/timescaledb:1.7.4-pg11
+  environment:
+    - POSTGRES_PASSWORD=password
+
+volumes:
+  db-data:
+  grafana-data:
+
+services:
+  # grafana:
+  #   # ждем https://github.com/grafana/grafana/commit/a0bb01103eebfa7e0d94201db5536b295c4f4529
+  #   image: grafana/grafana:master #6.2.2,
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=password # admin:password
+  #   ports:
+  #     - "3303:3000"
+  #   volumes:
+  #     - grafana-data:/var/lib/grafana
+  #   depends_on:
+  #     - db
+  db:
+    <<: *db
+    ports:
+      - "3301:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  test-db:
+    <<: *db
+    ports:
+      - "3302:5432"
