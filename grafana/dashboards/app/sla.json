@@ -1,0 +1,731 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "iteration": 1565780888157,
+  "links": [
+    {
+      "icon": "dashboard",
+      "includeVars": false,
+      "tags": [],
+      "title": "Apps",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/S1KEdWZZk/apps"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Web",
+      "type": "link",
+      "url": "/d/yihqdWZWk/web"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Background",
+      "type": "link",
+      "url": "/d/w_DQlcWZz/background"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Errors",
+      "type": "link",
+      "url": "/d/errors-x/errors"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Databases",
+      "type": "link",
+      "url": "/d/yihqdWZWs/databases"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "External",
+      "type": "link",
+      "url": "/d/yihqdWZWa/external"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Ruby VMs",
+      "type": "link",
+      "url": "/d/fSeYthmZk/ruby-wms"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Go runtime",
+      "type": "link",
+      "url": "/d/xihqdWZWk/go-runtime"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "SLA",
+      "type": "link",
+      "url": "/d/sla-xxxx/sla"
+    }
+  ],
+  "panels": [
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "name",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select name\nfrom apps\nwhere id = $app_id\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "App name",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "columns": [],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 2
+      },
+      "id": 6,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "Requests count",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Response time",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Apdex",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Satisfied",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Tolerating",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Frustrated",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        }
+      ],
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "with data as (\n  select *\n  from \"metric-data-by-day-ext\"\n  where\n    point >= date_trunc('day', now()) - interval '1 week'\n    and \"app-id\" = $app_id\n    and scope = ''\n    and name = any(array[\n      'Apdex',\n      'HttpDispatcher'\n    ])\n  order by point desc\n)\nselect\n  point as time,\n  'Requests count' as metric,\n  \"call-count\" as value\nfrom data\nwhere name = 'HttpDispatcher'\nunion all\nselect\n  point as time,\n  'Response time' as metric,\n  \"total-call-time\" / \"call-count\" as value\nfrom data\nwhere name = 'HttpDispatcher'\nunion all\nselect\n  point as time,\n  'Apdex' as metric,\n  (s + t/2) / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Satisfied' as metric,\n  s / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Tolerating' as metric,\n  t / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Frustrated' as metric,\n  f / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Daily",
+      "transform": "timeseries_to_columns",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 7,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "Requests count",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Response time",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Apdex",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Satisfied",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Tolerating",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Frustrated",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        }
+      ],
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "with data as (\n  select\n    point,\n    sum(\"call-count\")           as \"call-count\",\n    sum(\"total-call-time\")      as \"total-call-time\",\n    sum(\"total-exclusive-time\") as \"total-exclusive-time\",\n    min(\"min-call-time\")        as \"min-call-time\",\n    max(\"max-call-time\")        as \"max-call-time\",\n    sum(\"sum-of-squares\")       as \"sum-of-squares\",\n    scope, name\n  from (\n    select\n      date_trunc('week', point) as point,\n      \"call-count\",\n      \"total-call-time\",\n      \"total-exclusive-time\",\n      \"min-call-time\",\n      \"max-call-time\",\n      \"sum-of-squares\",\n      scope, name\n    from \"metric-data-by-day-ext\"\n    where\n      point >= date_trunc('day', now()) - interval '3 month'\n      and \"app-id\" = $app_id\n      and scope = ''\n      and name = any(array[\n        'Apdex',\n        'HttpDispatcher'\n      ])\n  ) as x\n  group by point, scope, name\n  order by point desc\n)\nselect\n  point as time,\n  'Requests count' as metric,\n  \"call-count\" as value\nfrom data\nwhere name = 'HttpDispatcher'\nunion all\nselect\n  point as time,\n  'Response time' as metric,\n  \"total-call-time\" / \"call-count\" as value\nfrom data\nwhere name = 'HttpDispatcher'\nunion all\nselect\n  point as time,\n  'Apdex' as metric,\n  (s + t/2) / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Satisfied' as metric,\n  s / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Tolerating' as metric,\n  t / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Frustrated' as metric,\n  f / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Weekly",
+      "transform": "timeseries_to_columns",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 8,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "Requests count",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Response time",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Apdex",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Satisfied",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Tolerating",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Frustrated",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percentunit"
+        }
+      ],
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "with data as (\n  select\n    point,\n    sum(\"call-count\")           as \"call-count\",\n    sum(\"total-call-time\")      as \"total-call-time\",\n    sum(\"total-exclusive-time\") as \"total-exclusive-time\",\n    min(\"min-call-time\")        as \"min-call-time\",\n    max(\"max-call-time\")        as \"max-call-time\",\n    sum(\"sum-of-squares\")       as \"sum-of-squares\",\n    scope, name\n  from (\n    select\n      date_trunc('month', point) as point,\n      \"call-count\",\n      \"total-call-time\",\n      \"total-exclusive-time\",\n      \"min-call-time\",\n      \"max-call-time\",\n      \"sum-of-squares\",\n      scope, name\n    from \"metric-data-by-day-ext\"\n    where\n      point >= date_trunc('day', now()) - interval '1 year'\n      and \"app-id\" = $app_id\n      and scope = ''\n      and name = any(array[\n        'Apdex',\n        'HttpDispatcher'\n      ])\n  ) as x\n  group by point, scope, name\n  order by point desc\n)\nselect\n  point as time,\n  'Requests count' as metric,\n  \"call-count\" as value\nfrom data\nwhere name = 'HttpDispatcher'\nunion all\nselect\n  point as time,\n  'Response time' as metric,\n  \"total-call-time\" / \"call-count\" as value\nfrom data\nwhere name = 'HttpDispatcher'\nunion all\nselect\n  point as time,\n  'Apdex' as metric,\n  (s + t/2) / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Satisfied' as metric,\n  s / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Tolerating' as metric,\n  t / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x\nunion all\nselect\n  point as time,\n  'Frustrated' as metric,\n  f / (s + t + f) as value\nfrom (\n  select\n    point,\n    \"call-count\" as s,\n    \"total-call-time\" as t,\n    \"total-exclusive-time\" as f\n  from data\n  where name = 'Apdex'\n) as x",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Monthly",
+      "transform": "timeseries_to_columns",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 19,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "7",
+          "value": "7"
+        },
+        "hide": 2,
+        "label": "",
+        "name": "app_id",
+        "options": [
+          {
+            "selected": false,
+            "text": "not_selected",
+            "value": "not_selected"
+          }
+        ],
+        "query": "not_selected",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "SLA",
+  "uid": "sla-xxxx",
+  "version": 1
+}
