@@ -12,7 +12,7 @@ Statsbit consists of Backend and UI.
 Backend is written in Clojure and stores data in [TimescaleDB](https://www.timescale.com).
 UI is built on top of [Grafana](https://grafana.com).
 
-## Setup
+## Requirements
 
 Statsbit requires Postgres with the Timescale extension.
 We run Statsibt on Postgres 11 and Timescale 1.7.4.
@@ -20,6 +20,10 @@ I plan to support the upcoming Timescale 2.0 too.
 I've successfully tested some requests on Postgres 12, so you may help us to test Statsbit on the 12th version.
 
 Also, every NewRelic agent requires a valid SSL certificate for the backend.
+
+Statsbit distributes via docker images, so you need Docker to run it. We run it in our Kubernetes cluster.
+
+And of course, you need a lot of free disk space. It takes us about 500 GB to store data for 6 months.
 
 ## Naming
 
