@@ -3,20 +3,22 @@
    [ru.bia-tech.statsbit.context :as ctx]
    [ru.bia-tech.statsbit.utils.agent-id :as u.agent-id]
    [clojure.string :as str]
-   [hugsql.core :as hugsql]))
+   [hugsql.core :as hugsql]
+   [clojure.java.io :as io]))
 
 (hugsql/def-db-fns "ru/bia_tech/statsbit/commands/connect.sql" {:quoting :ansi})
 
 (defn process [req]
-  (let [data      (-> req :body first)
-        app-name  (as-> data <>
-                    (get <> "app_name")
-                    (str/join "," <>))
-        host      (get data "host")
-        app-id    (:id (upsert-app ctx/*conn* {:name app-name}))
-        server-id (:id (upsert-server ctx/*conn* {:app-id app-id
-                                                  :host   host}))
-        agent-id  (u.agent-id/build app-id server-id)]
+  (let [data         (-> req :body first)
+        backend-host (get-in req [:headers "host"])
+        app-name     (as-> data <>
+                       (get <> "app_name")
+                       (str/join "," <>))
+        host         (get data "host")
+        app-id       (:id (upsert-app ctx/*conn* {:name app-name}))
+        server-id    (:id (upsert-server ctx/*conn* {:app-id app-id
+                                                     :host   host}))
+        agent-id     (u.agent-id/build app-id server-id)]
     {:agent_run_id                     agent-id
      :xray_session.enabled             false
      :error_collector.enabled          true
@@ -25,8 +27,15 @@
      :encoding_key       "some-key" ;; for python
      :collect_traces     true
      :collect_errors     true
-     :data_report_period 60}))
+     :data_report_period 60
 
+     ;; там был еще минифицированный вариант, и я уже не помню, где достал полный
+     :js_agent_loader (-> "browser/js_agent_loader.js" io/resource slurp)
+     :application_id  app-id
+     :js_agent_file   (str backend-host "/js-agent/nr-1169.js")
+     :beacon          (str backend-host "/browser")
+     :error_beacon    (str backend-host "/browser")
+     :browser_key     "my-browser-key"}))
 
 ;; `return_value.request_headers_map` будет мержиться к последующим запросам.
 ;; `return_value.agent_run_id` передается первым значением в векторе запроса
@@ -51,3 +60,10 @@
 ;; sampling_target_period_in_seconds
 ;; trusted_account_ids
 ;; trusted_account_key
+
+
+
+
+;; там вроде бы было 2 js файла для мониторинга, для SPA и для "обычных"
+
+;; browser_monitoring.auto_instrument должен быть включен, на коллекторе он выключен.
