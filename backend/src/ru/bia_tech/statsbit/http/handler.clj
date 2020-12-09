@@ -4,7 +4,9 @@
    [ring.util.http-response :as ring.resp]
    [ring.middleware.params :as ring.params]
    [ring.middleware.keyword-params :as ring.keyword-params]
+   [ring.middleware.resource :as ring.resource]
    [ru.bia-tech.statsbit.http.agent :as agent]
+   [ru.bia-tech.statsbit.http.browser :as browser]
    [ru.bia-tech.statsbit.context :as ctx]))
 
 (defn wrap-log-ex [handler]
@@ -25,6 +27,8 @@
           (throw ex))))))
 
 (defn default-handler [req]
+  #_(tap> [req (ring.util.request/body-string req)])
+
   (ring.resp/not-found))
 
 (defn health []
@@ -33,9 +37,11 @@
 (defn build []
   (r.ring/ring-handler
    (r.ring/router [(health)
-                   (agent/build)])
+                   (agent/build)
+                   (browser/build)])
    default-handler
    {:middleware [wrap-log-ex
                  wrap-exception
+                 #(ring.resource/wrap-resource % "public")
                  ring.params/wrap-params
                  ring.keyword-params/wrap-keyword-params]}))
