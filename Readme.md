@@ -26,7 +26,11 @@ And of course, you need a lot of free disk space. It takes us about 500 GB to st
 
 ## Install
 
+VALID SSL FOR BACKEND IS REQUIRED.
+
 ## Configuration
+
+Both Backend and UI are configured via environment variables.
 
 ### Backend
 
@@ -101,6 +105,29 @@ GF_DATABASE_PASSWORD=grafana_password
 ```
 
 Please check out other [Grafana's settings](https://grafana.com/docs/grafana/latest/administration/configuration/). For example, you can configure LDAP.
+
+## Client configuration
+
+You can use any NewRelic's client that supports the 17th version of the protocol.
+Please search `protocol_version` in the source code of the client.
+
+```
+NEW_RELIC_APP_NAME=your-cool-app
+NEW_RELIC_AGENT_ENABLED=true
+
+# It's required to use a valid ssl sertificate
+NEW_RELIC_HOST=backend.your-company.com
+
+# please check this path, it may be different
+NEW_RELIC_CA_BUNDLE_PATH=/etc/ssl/certs/ca-bundle.crt
+# NEW_RELIC_CA_BUNDLE_PATH=/etc/ssl/certs/ca-certificates.crt
+
+NEW_RELIC_LICENSE_KEY=any-license # required but not used
+
+# for debugging
+NEW_RELIC_LOG=stdout
+NEW_RELIC_LOG_LEVEL=debug # or 'info'
+```
 
 ## Naming
 
