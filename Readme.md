@@ -30,7 +30,7 @@ VALID SSL FOR BACKEND IS REQUIRED.
 
 ## Configuration
 
-Both Backend and UI are configured via environment variables.
+Both Backend and UI are configurable via environment variables.
 
 ### Backend
 
@@ -127,6 +127,23 @@ NEW_RELIC_LICENSE_KEY=any-license # required but not used
 # for debugging
 NEW_RELIC_LOG=stdout
 NEW_RELIC_LOG_LEVEL=debug # or 'info'
+```
+
+## Tips
+
+If you can't use an SSL certificate and you use the ruby agent, then you can disable this requirement by monkey-patching:
+
+```ruby
+module NewRelicPatch
+  module NewRelicService
+    def setup_connection_for_ssl(conn)
+      super conn
+      conn.use_ssl = false
+    end
+  end
+end
+
+NewRelic::Agent::NewRelicService.prepend NewRelicPatch::NewRelicService
 ```
 
 ## Naming
