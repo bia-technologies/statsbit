@@ -15,7 +15,7 @@ UI is built on top of [Grafana](https://grafana.com).
 ## Requirements
 
 Statsbit requires Postgres with the Timescale extension.
-We run It on Postgres 11 and 12 and Timescale 1.7.4.
+We run It on Postgres 11 and 12 with Timescale 1.7.4.
 I'm going to support Timescale 2.0 too.
 
 Also, every NewRelic agent requires a valid SSL certificate for the backend.
