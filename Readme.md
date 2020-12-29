@@ -26,7 +26,13 @@ And of course, you need a lot of free disk space. It takes us about 500 GB to st
 
 ## Install
 
-VALID SSL FOR BACKEND IS REQUIRED.
+You can found docker images [here](https://hub.docker.com/repository/docker/biatechru/statsbit).
+There are two images:
+
++ biatechru/statsbit:master-backend-{{ N }}-{{ SHA }}
++ biatechru/statsbit:master-grafana-{{ N }}-{{ SHA }}
+
+Also, you need to use the backend containers with a reverse proxy with a valid SSL certificate. For example, you can use Nginx or Kubernetes Ingress Controller.
 
 ## Configuration
 
