@@ -146,6 +146,11 @@ end
 NewRelic::Agent::NewRelicService.prepend NewRelicPatch::NewRelicService
 ```
 
+
+у графаны что-то с миграциями в postgres 11.4, решается так:
+https://github.com/grafana/grafana/issues/17771#issuecomment-510407530
+
+
 ## Naming
 
 Early I maintained [a fork](https://github.com/Undev/errbit) of Errbit
