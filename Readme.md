@@ -26,7 +26,7 @@ And of course, you need a lot of free disk space. It takes us about 500 GB to st
 
 ## Install
 
-You can found docker images [here](https://hub.docker.com/repository/docker/biatechru/statsbit).
+You can found docker images [here](https://hub.docker.com/r/biatechru/statsbit/tags?page=1&ordering=last_updated).
 There are two images:
 
 + biatechru/statsbit:master-backend-{{ N }}-{{ SHA }}
