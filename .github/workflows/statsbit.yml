@@ -3,6 +3,10 @@ name: Statsbit
 on:
   push:
     branches: [ master ]
+    paths:
+    - '.github/**'
+    - 'backend/**'
+    - 'grafana/**'
 
 defaults:
   run:
