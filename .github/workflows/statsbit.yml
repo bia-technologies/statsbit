@@ -2,7 +2,7 @@ name: Statsbit
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, development ]
     paths:
     - '.github/**'
     - 'backend/**'
