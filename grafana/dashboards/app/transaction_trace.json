@@ -398,7 +398,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \"start-time\", duration, uri, host\nfrom \"transaction-sample-data-ext\" as data\njoin servers on servers.id = data.\"server-id\"\nwhere  \n  $__timeFilter(\"start-time\")\n  and data.\"transaction-name\" = any(array['$scope', 'WebTransaction/$scope'])\n  and data.id = $trace_id\n",
+          "rawSql": "select \"start-time\", duration, uri, host\nfrom \"transaction-sample-data-ext\" as data\njoin servers on servers.id = data.\"server-id\"\nwhere  \n  $__timeFilter(\"start-time\")\n  and data.\"transaction-name\" = any(array['$scope', 'OtherTransaction/$scope'])\n  and data.id = $trace_id\n",
           "refId": "A",
           "select": [
             [
@@ -472,7 +472,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select html\nfrom \"transaction-sample-data-ext\" as data\nwhere\n  $__timeFilter(\"start-time\")\n  and data.\"transaction-name\" = any(array['$scope', 'WebTransaction/$scope'])\n  and data.id = $trace_id\n",
+          "rawSql": "select html\nfrom \"transaction-sample-data-ext\" as data\nwhere\n  $__timeFilter(\"start-time\")\n  and data.\"transaction-name\" = any(array['$scope', 'OtherTransaction/$scope'])\n  and data.id = $trace_id\n",
           "refId": "A",
           "select": [
             [
