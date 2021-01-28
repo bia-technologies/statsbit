@@ -1,0 +1,40 @@
+networks:
+  net:
+
+services:
+  redis:
+    image: redis:6.0.10
+    networks:
+      - net
+
+  postgres:
+    image: postgres:13.1
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - net
+
+  elasticsearch:
+    image: elasticsearch:7.10.1
+    networks:
+      - net
+
+  x-app: &app
+    build: .
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - postgres
+      - elasticsearch
+    networks:
+      - net
+
+  web:
+    <<: *app
+    ports:
+      - "3000:3000"
+
+
+  # background:
