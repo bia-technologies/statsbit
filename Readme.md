@@ -16,15 +16,15 @@ UI is built on top of [Grafana](https://grafana.com).
 
 ## Example
 
-+ cd example
++  git clone https://github.com/bia-technologies/statsbit.git
++ cd statsbit/example
 + docker-compose up -d statsbit-timescale statsbit-postgres app-postgres
 + wait a second
 + docker-compose up
-+ grafana: http://localhost:8080/d/S1KEdWZZk/apps?orgId=1&refresh=5s
++ open [grafana](http://localhost:8080/d/yihqdWZWk/web?orgId=1&var-app_id=1&refresh=5s)
    + user: admin
    + password: admin_password
 + it requires some time to send the first metrics, so just wait a minute
-+ click "your-cool-app"
 + that's it!
 
 ## Requirements
