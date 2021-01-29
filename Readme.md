@@ -12,6 +12,19 @@ Statsbit consists of Backend and UI.
 Backend is written in Clojure and stores data in [TimescaleDB](https://www.timescale.com).
 UI is built on top of [Grafana](https://grafana.com).
 
+## Example
+
++ cd example
++ docker-compose up -d statsbit-timescale statsbit-postgres app-postgres
++ wait a second
++ docker-compose up
++ grafana: http://localhost:8080/d/S1KEdWZZk/apps?orgId=1&refresh=5s
+   + user: admin
+   + password: admin_password
++ it requires some time to send the first metrics, so just wait a minute
++ click "your-cool-app"
++ that's it!
+
 ## Requirements
 
 Statsbit requires Postgres with the Timescale extension.

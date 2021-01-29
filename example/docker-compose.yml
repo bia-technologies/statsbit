@@ -10,7 +10,7 @@ services:
       - net
 
   statsbit-backend:
-    image:  biatechru/statsbit:master-backend-7-12aa5c3b
+    image:  biatechru/statsbit:master-backend-9-fa398a71
     environment:
       - STATSBIT_BACKEND_MIGRATION_LOCATIONS=db/migration/common,db/migration/timescale_1.x,db/migration/test_server_1.x
 
@@ -41,7 +41,7 @@ services:
       - net
 
   statsbit-grafana:
-    image: biatechru/statsbit:master-grafana-7-12aa5c3b
+    image: biatechru/statsbit:master-grafana-9-fa398a71
     environment:
       - STATSBIT_GRAFANA_DATASOURCE_URL=statsbit-timescale:5432
       - STATSBIT_GRAFANA_DATASOURCE_DATABASE=postgres
