@@ -1,5 +1,7 @@
 # Statsbit
 
+![dashboard](doc/dashboard.png)
+
 It is the [NewRelic](https://newrelic.com) drop-in replacement.
 It works with all NewRelic's agents that support
 [the 17th protocol version](https://github.com/newrelic/newrelic-ruby-agent/search?q=PROTOCOL_VERSION).
