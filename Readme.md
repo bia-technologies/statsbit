@@ -1,5 +1,7 @@
 # Statsbit
 
+![dashboard](doc/dashboard.png)
+
 It is the [NewRelic](https://newrelic.com) drop-in replacement.
 It works with all NewRelic's agents that support
 [the 17th protocol version](https://github.com/newrelic/newrelic-ruby-agent/search?q=PROTOCOL_VERSION).
@@ -11,6 +13,19 @@ But if you want to store your data behind the firewall and can use only basic fe
 Statsbit consists of Backend and UI.
 Backend is written in Clojure and stores data in [TimescaleDB](https://www.timescale.com).
 UI is built on top of [Grafana](https://grafana.com).
+
+## Example
+
++  git clone https://github.com/bia-technologies/statsbit.git
++ cd statsbit/example
++ docker-compose up -d statsbit-timescale statsbit-postgres app-postgres
++ wait a second
++ docker-compose up
++ open [grafana](http://localhost:8080/d/yihqdWZWk/web?orgId=1&var-app_id=1&refresh=5s)
+   + user: admin
+   + password: admin_password
++ it requires some time to send the first metrics, so just wait a minute
++ that's it!
 
 ## Requirements
 

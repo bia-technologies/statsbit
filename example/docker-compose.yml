@@ -1,0 +1,109 @@
+networks:
+  net:
+
+services:
+  statsbit-timescale:
+    image: timescale/timescaledb:1.7.4-pg12
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - net
+
+  statsbit-backend:
+    image:  biatechru/statsbit:master-backend-9-fa398a71
+    environment:
+      - STATSBIT_BACKEND_MIGRATION_LOCATIONS=db/migration/common,db/migration/timescale_1.x,db/migration/test_server_1.x
+
+      - STATSBIT_BACKEND_PORT=3000
+
+      - STATSBIT_BACKEND_DB_POOL_ACQUIRE_INCREMENT=1
+      - STATSBIT_BACKEND_DB_POOL_MIN_POOL_SIZE=1
+      - STATSBIT_BACKEND_DB_POOL_MAX_POOL_SIZE=4
+
+      - STATSBIT_BACKEND_JETTY_MIN_THREADS=1
+      - STATSBIT_BACKEND_JETTY_MAX_THREADS=4
+
+      - STATSBIT_BACKEND_DB_NAME=postgres
+      - STATSBIT_BACKEND_DB_HOST=statsbit-timescale
+      - STATSBIT_BACKEND_DB_PORT=5432
+      - STATSBIT_BACKEND_DB_USER=postgres
+      - STATSBIT_BACKEND_DB_PASSWORD=password
+    depends_on:
+      - statsbit-timescale
+    networks:
+      - net
+
+  statsbit-postgres:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - net
+
+  statsbit-grafana:
+    image: biatechru/statsbit:master-grafana-9-fa398a71
+    environment:
+      - STATSBIT_GRAFANA_DATASOURCE_URL=statsbit-timescale:5432
+      - STATSBIT_GRAFANA_DATASOURCE_DATABASE=postgres
+      - STATSBIT_GRAFANA_DATASOURCE_USER=postgres
+      - STATSBIT_GRAFANA_DATASOURCE_PASSWORD=password
+
+      - STATSBIT_GRAFANA_DATASOURCE_MAX_OPEN_CONNS=4
+      - STATSBIT_GRAFANA_DATASOURCE_MAX_IDLE_CONNS=2
+      - STATSBIT_GRAFANA_DATASOURCE_CONN_MAX_LIFETIME=14400
+
+      - GF_SECURITY_ADMIN_PASSWORD=admin_password
+
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=statsbit-postgres:5432
+      - GF_DATABASE_NAME=postgres
+      - GF_DATABASE_USER=postgres
+      - GF_DATABASE_PASSWORD=password
+    depends_on:
+      - statsbit-postgres
+      - statsbit-timescale
+      - statsbit-backend
+    ports:
+      - "8080:3000"
+    networks:
+      - net
+
+  app-postgres:
+    image: postgres:13.1
+    environment:
+      - POSTGRES_PASSWORD=password
+    networks:
+      - net
+
+  web:
+    build: ./rails-app
+    working_dir: /app
+    volumes:
+      - ./rails-app:/app
+    command: bash -c "bin/rails db:setup && bin/rails server"
+    ports:
+      - "3000:3000"
+    environment:
+      - NEW_RELIC_APP_NAME=your-cool-app
+      - NEW_RELIC_AGENT_ENABLED=true
+      - NEW_RELIC_HOST=statsbit-backend
+      - NEW_RELIC_PORT=3000 # SSL is disabled by monkey patch
+      - NEW_RELIC_LICENSE_KEY=any-license
+      - NEW_RELIC_LOG=stdout
+      - NEW_RELIC_LOG_LEVEL=debug
+    depends_on:
+      - app-postgres
+      - statsbit-backend
+    networks:
+      - net
+
+  load-generator:
+    build: ./load-generator
+    working_dir: /app
+    command: bundle exec ruby app.rb
+    volumes:
+      - ./load-generator:/app
+    depends_on:
+      - web
+    networks:
+      - net
