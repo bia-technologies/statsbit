@@ -1984,3 +1984,90 @@ where
   and "exception-class-name" = '$exception_class_name'
 order by point asc
 limit 1
+
+
+-- Custom
+
+-- сколько сторонних запросов на транзакцию
+
+with
+transactions as (
+  select
+    "app-id",
+    replace(name, 'WebTransactionTotalTime/', '') as name,
+    sum("call-count") as calls
+  from "metric-data-ext"
+  where
+      $__timeFilter(point)
+  and "call-count" > 0
+  and scope = ''
+  and name like 'WebTransactionTotalTime/%'
+  group by "app-id", name
+),
+components as (
+  select
+    md."app-id",
+    t.name as tx,
+    md.name,
+    sum("call-count") / sum(t.calls) as calls_per_req
+  from transactions as t
+  join "metric-data-ext" as md
+  on  t."app-id" = md."app-id"
+  and (   md.scope = t.name
+       or md.scope = 'WebTransaction/' || t.name) -- python
+  where
+      $__timeFilter(point)
+  and md.name like any(array['Datastore/%', 'External/%'])
+  group by md."app-id", t.name, md.name
+)
+select
+  apps.name as app,
+  c.tx,
+  c.name,
+  c.calls_per_req
+from components as c
+join apps on c."app-id" = apps.id
+where c.calls_per_req > 2
+order by c.calls_per_req desc
+;
+
+with
+transactions as (
+  select
+    "app-id",
+    name,
+    sum("call-count") as calls
+  from "metric-data-ext"
+  where
+      $__timeFilter(point)
+  and "call-count" > 0
+  and scope = ''
+  and name like 'OtherTransaction/%'
+  and name not like 'OtherTransaction/%/all'
+  group by "app-id", name
+),
+components as (
+  select
+    md."app-id",
+    replace(t.name, 'OtherTransaction/', '') as tx,
+    md.name,
+    sum("call-count") / sum(t.calls) as calls_per_req
+  from transactions as t
+  join "metric-data-ext" as md
+  on  t."app-id" = md."app-id"
+  and md.scope = t.name
+  where
+      $__timeFilter(point)
+  and md.name like any(array['Datastore/%', 'External/%'])
+  group by md."app-id", t.name, md.name
+)
+select
+  apps.name as app,
+  c.tx,
+  c.name,
+  c.calls_per_req
+from components as c
+join apps on c."app-id" = apps.id
+where c.calls_per_req > 2
+order by c.calls_per_req desc
+;
