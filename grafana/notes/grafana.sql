@@ -1990,6 +1990,7 @@ limit 1
 
 -- сколько сторонних запросов на транзакцию
 
+
 with
 transactions as (
   select
@@ -2009,7 +2010,7 @@ components as (
     md."app-id",
     t.name as tx,
     md.name,
-    sum("call-count") / sum(t.calls) as calls_per_req
+    sum("call-count") / t.calls as calls_per_req
   from transactions as t
   join "metric-data-ext" as md
   on  t."app-id" = md."app-id"
@@ -2018,18 +2019,20 @@ components as (
   where
       $__timeFilter(point)
   and md.name like any(array['Datastore/%', 'External/%'])
-  group by md."app-id", t.name, md.name
+  group by md."app-id", t.name, t.calls, md.name
 )
 select
+  apps.id as app_id,
   apps.name as app,
   c.tx,
   c.name,
   c.calls_per_req
 from components as c
 join apps on c."app-id" = apps.id
-where c.calls_per_req > 2
+where c.calls_per_req > 3
 order by c.calls_per_req desc
 ;
+
 
 with
 transactions as (
@@ -2051,7 +2054,7 @@ components as (
     md."app-id",
     replace(t.name, 'OtherTransaction/', '') as tx,
     md.name,
-    sum("call-count") / sum(t.calls) as calls_per_req
+    sum("call-count") / t.calls as calls_per_req
   from transactions as t
   join "metric-data-ext" as md
   on  t."app-id" = md."app-id"
@@ -2059,15 +2062,16 @@ components as (
   where
       $__timeFilter(point)
   and md.name like any(array['Datastore/%', 'External/%'])
-  group by md."app-id", t.name, md.name
+  group by md."app-id", t.name, t.calls, md.name
 )
 select
+  apps.id as app_id,
   apps.name as app,
   c.tx,
   c.name,
   c.calls_per_req
 from components as c
 join apps on c."app-id" = apps.id
-where c.calls_per_req > 2
+where c.calls_per_req > 3
 order by c.calls_per_req desc
 ;
