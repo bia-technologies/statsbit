@@ -23,4 +23,4 @@
 
 (defn build [profile]
   (utils.component/derefable
-   {:init init :prifile profile}))
+   {:init init :profile profile}))
