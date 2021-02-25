@@ -18,7 +18,7 @@ jobs:
     container: clojure:openjdk-11-tools-deps-1.10.1.739
     services:
       postgres:
-        image: timescale/timescaledb:1.7.4-pg11
+        image: timescale/timescaledb:2.1.0-pg13
         env:
           POSTGRES_PASSWORD: password
         ports:
