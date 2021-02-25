@@ -30,8 +30,7 @@ UI is built on top of [Grafana](https://grafana.com).
 ## Requirements
 
 Statsbit requires Postgres with the Timescale extension.
-We run It on Postgres 11 and 12 with Timescale 1.7.4.
-I'm going to support Timescale 2.0 too.
+We run it on Postgres 11, 12, 13 with Timescale 1.7.x or 2.x.
 
 Also, every NewRelic agent requires a valid SSL certificate for the backend.
 
@@ -56,7 +55,7 @@ Both Backend and UI are configurable via environment variables.
 ### Backend
 
 ```
-STATSBIT_BACKEND_MIGRATION_LOCATIONS=db/migration/common,db/migration/timescale_1.x,db/migration/prod_server_1.x
+STATSBIT_BACKEND_MIGRATION_LOCATIONS=db/migration/common,db/migration/timescale_2.x,db/migration/prod_server_2.x
 
 STATSBIT_BACKEND_PORT=3000
 
@@ -77,20 +76,20 @@ STATSBIT_BACKEND_DB_PASSWORD=statsbit_password
 `STATSBIT_BACKEND_MIGRATION_LOCATIONS` is a comma separated list of paths:
 
 + `db/migration/common` - contains common migrations
-+ `db/migration/timescale_1.x` - contains migrations for timescale 1.x
-+ `db/migration/prod_server_1.x` - contains default settings for a production server that stores data for 6 months.
-+ `db/migration/test_server_1.x` - contains default settings for a test server that stores data for 1 month.
++ `db/migration/timescale_2.x` - contains migrations for timescale 1.x
++ `db/migration/prod_server_2.x` - contains default settings for a production server that stores data for 6 months.
++ `db/migration/test_server_2.x` - contains default settings for a test server that stores data for 1 month.
 
-Also, I'm going to add following paths for TimescaleDB 2.0
+Use this paths if you use timescale 1.7.x:
 
-+ `db/migration/timescale_2.x`
-+ `db/migration/prod_server_2.x`
-+ `db/migration/test_server_2.x`
++ `db/migration/timescale_1.x`
++ `db/migration/prod_server_1.x`
++ `db/migration/test_server_1.x`
 
 Statsbit uses FlyWay's migrations. So you can add custom migration in classpath, filesystem or aws s3.
 Please read its [documentation](https://flywaydb.org/documentation/configuration/parameters/locations).
 For example:
-`STATSBIT_BACKEND_MIGRATION_LOCATIONS=db/migration/common,db/migration/timescale_1.x,filesystem:/path/to/your/server/migrations`.
+`STATSBIT_BACKEND_MIGRATION_LOCATIONS=db/migration/common,db/migration/timescale_2.x,filesystem:/path/to/your/server/migrations`.
 
 You can also configure [Sentry](https://sentry.io/) and even NewRelic.
 
