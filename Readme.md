@@ -152,6 +152,13 @@ NEW_RELIC_LOG_LEVEL=debug # or 'info'
 
 ## Tips
 
+```sql
+-- Drop all chunks older than 3 months ago:
+SELECT drop_chunks(interval '3 months');
+```
+
+***
+
 If you can't use an SSL certificate and you use the ruby agent, then you can disable this requirement by monkey-patching:
 
 ```ruby
@@ -166,6 +173,8 @@ end
 
 NewRelic::Agent::NewRelicService.prepend NewRelicPatch::NewRelicService
 ```
+
+***
 
 If you have a problem with Grafana migrations, please read this [issue](https://github.com/grafana/grafana/issues/17771#issuecomment-510407530)
 
