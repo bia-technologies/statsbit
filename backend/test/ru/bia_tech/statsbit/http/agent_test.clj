@@ -116,7 +116,7 @@
                       "priority"          0.781743,
                       "externalDuration"  0.9943344593048096,
                       "error"             false,
-                      "timestamp"         1.5645692846195323E9,
+                      "timestamp"         now,
                       "nr.apdexPerfZone"  "F",
                       "name"              "Controller/main_page/show",
                       "duration"          14.987826347351074,
@@ -132,7 +132,7 @@
                       "response.headers.contentType" "text/html; charset=utf-8"}]
                     [{"priority"         0.388966,
                       "error"            false,
-                      "timestamp"        1.5645692996108737E9,
+                      "timestamp"        now,
                       "nr.apdexPerfZone" "S",
                       "name"             "Controller/Middleware/Rack/Rack::Rewrite/call",
                       "duration"         0.004479408264160156,

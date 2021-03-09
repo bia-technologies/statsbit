@@ -63,8 +63,14 @@
            (assoc trace :transaction-id transaction-id))
          errors transaction-ids)))
 
+(defn- fresh? [event]
+  (let [max-lag (* 10 60)
+        lag     (-> event :timestamp u.time/lag-in-sec Math/abs)]
+    (< lag max-lag)))
+
 (defn process [events]
   (let [events     (->> events
+                        (filter fresh?)
                         (sort-by (juxt :app-id, :transaction-name)))
         batch-size (int (/ Short/MAX_VALUE (count fields)))]
     (doseq [events (partition-all batch-size events)]
