@@ -1,4 +1,4 @@
-FROM grafana/grafana:7.2.0
+FROM grafana/grafana:7.3.7
 
 ENV GF_USERS_DEFAULT_THEME="light"
 ENV GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/dashboards/main/apps.json
