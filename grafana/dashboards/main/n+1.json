@@ -1,0 +1,367 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 34,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "displayMode": "auto",
+            "filterable": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "calls_per_req"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "basic"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 10
+                    },
+                    {
+                      "color": "red",
+                      "value": 50
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "app"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "/d/yihqdWZWk/webdashboard?var-app_id=${__data.fields.app_id}﻿&from=${__from}&to=${__to}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "app_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tx"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "/d/ZohJi5iZk/webtransaction?var-app_id=${__data.fields.app_id}﻿&var-scope=﻿${__data.fields.tx}﻿&from=${__from}&to=${__to}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.2.0",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "with\ntransactions as (\n  select\n    \"app-id\",\n    replace(name, 'WebTransactionTotalTime/', '') as name,\n    sum(\"call-count\") as calls\n  from \"metric-data-ext\"\n  where\n      $__timeFilter(point)\n  and \"call-count\" > 0\n  and scope = ''\n  and name like 'WebTransactionTotalTime/%'\n  group by \"app-id\", name\n),\ncomponents as (\n  select\n    md.\"app-id\",\n    t.name as tx,\n    md.name,\n    sum(\"call-count\") / t.calls as calls_per_req\n  from transactions as t\n  join \"metric-data-ext\" as md\n  on  t.\"app-id\" = md.\"app-id\"\n  and (   md.scope = t.name\n       or md.scope = 'WebTransaction/' || t.name) -- python\n  where\n      $__timeFilter(point)\n  and md.name like any(array['Datastore/%', 'External/%'])\n  group by md.\"app-id\", t.name, t.calls, md.name\n)\nselect\n  apps.id as app_id,\n  apps.name as app,\n  c.tx,\n  c.name,\n  c.calls_per_req\nfrom components as c\njoin apps on c.\"app-id\" = apps.id\nwhere c.calls_per_req > 3\norder by c.calls_per_req desc\n;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "\"analytic-event-data\"",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Web",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "calls_per_req"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "basic"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 10
+                    },
+                    {
+                      "color": "red",
+                      "value": 50
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "app_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "app"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "/d/w_DQlcWZz/background?var-app_id=${__data.fields.app_id}﻿&from=${__from}&to=${__to}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tx"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "/d/ZohJi5iZx/backgroundtransaction?var-app_id=${__data.fields.app_id}﻿&var-scope=﻿${__data.fields.tx}﻿&from=${__from}&to=${__to}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 4,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "calls_per_req"
+          }
+        ]
+      },
+      "pluginVersion": "7.2.0",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "with\ntransactions as (\n  select\n    \"app-id\",\n    name,\n    sum(\"call-count\") as calls\n  from \"metric-data-ext\"\n  where\n      $__timeFilter(point)\n  and \"call-count\" > 0\n  and scope = ''\n  and name like 'OtherTransaction/%'\n  and name not like 'OtherTransaction/%/all'\n  group by \"app-id\", name\n),\ncomponents as (\n  select\n    md.\"app-id\",\n    replace(t.name, 'OtherTransaction/', '') as tx,\n    md.name,\n    sum(\"call-count\") / t.calls as calls_per_req\n  from transactions as t\n  join \"metric-data-ext\" as md\n  on  t.\"app-id\" = md.\"app-id\"\n  and md.scope = t.name\n  where\n      $__timeFilter(point)\n  and md.name like any(array['Datastore/%', 'External/%'])\n  group by md.\"app-id\", t.name, t.calls, md.name\n)\nselect\n  apps.id as app_id,\n  apps.name as app,\n  c.tx,\n  c.name,\n  c.calls_per_req\nfrom components as c\njoin apps on c.\"app-id\" = apps.id\nwhere c.calls_per_req > 3\norder by c.calls_per_req desc\n;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "\"analytic-event-data\"",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Background",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "nowDelay": "2m"
+  },
+  "timezone": "",
+  "title": "N+1",
+  "uid": "n-plus-one",
+  "version": 30
+}

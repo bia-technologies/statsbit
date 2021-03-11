@@ -17,6 +17,14 @@
   "graphTooltip": 0,
   "links": [
     {
+      "icon": "dashboard",
+      "tags": [],
+      "title": "N+1",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/one-plus-one/n-1"
+    },
+    {
       "$$hashKey": "object:79",
       "icon": "dashboard",
       "tags": [],
