@@ -18,17 +18,193 @@
   "links": [],
   "panels": [
     {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*_bytes"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.2.0",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select 'metric-data' as name, table_bytes, index_bytes, toast_bytes, total_bytes from hypertable_detailed_size('metric-data')\nunion all\nselect 'analytic-event-data' as name, table_bytes, index_bytes, toast_bytes, total_bytes from hypertable_detailed_size('analytic-event-data')\nunion all\nselect 'transaction-sample-data' as name, table_bytes, index_bytes, toast_bytes, total_bytes from hypertable_detailed_size('transaction-sample-data')\nunion all\nselect 'errors-data' as name, table_bytes, index_bytes, toast_bytes, total_bytes from hypertable_detailed_size('error-data')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "\"analytic-event-data\"",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "hypertable_detailed_size [2.x]",
+      "type": "table"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*total_bytes"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 13,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.2.0",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select 'metric-data' as name, total_chunks, number_compressed_chunks, before_compression_total_bytes, after_compression_total_bytes from hypertable_compression_stats('metric-data')\nunion all\nselect 'analytic-event-data' as name, total_chunks, number_compressed_chunks, before_compression_total_bytes, after_compression_total_bytes from hypertable_compression_stats('analytic-event-data')\nunion all\nselect 'transaction-sample-data' as name, total_chunks, number_compressed_chunks, before_compression_total_bytes, after_compression_total_bytes from hypertable_compression_stats('transaction-sample-data')\nunion all\nselect 'errors-data' as name, total_chunks, number_compressed_chunks, before_compression_total_bytes, after_compression_total_bytes from hypertable_compression_stats('error-data')\n\n\n\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "\"analytic-event-data\"",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "hypertable_compression_stats [2.x]",
+      "type": "table"
+    },
+    {
       "columns": [],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 17
       },
-      "id": 8,
-      "options": {},
+      "id": 9,
       "pageSize": null,
       "showHeader": true,
       "sort": {
@@ -37,6 +213,7 @@
       },
       "styles": [
         {
+          "$$hashKey": "object:546",
           "alias": "",
           "align": "auto",
           "colorMode": null,
@@ -54,6 +231,7 @@
           "unit": "decbytes"
         },
         {
+          "$$hashKey": "object:547",
           "alias": "",
           "align": "auto",
           "colorMode": null,
@@ -71,6 +249,7 @@
           "unit": "decbytes"
         },
         {
+          "$$hashKey": "object:548",
           "alias": "",
           "align": "auto",
           "colorMode": null,
@@ -88,6 +267,7 @@
           "unit": "decbytes"
         },
         {
+          "$$hashKey": "object:549",
           "alias": "",
           "align": "auto",
           "colorMode": null,
@@ -109,6 +289,7 @@
         {
           "format": "table",
           "group": [],
+          "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
           "rawSql": "select 'metric-data' as name, * from hypertable_relation_size('metric-data')\nunion all\nselect 'analytic-event-data' as name, * from hypertable_relation_size('analytic-event-data')\nunion all\nselect 'transaction-sample-data' as name, * from hypertable_relation_size('transaction-sample-data')\nunion all\nselect 'errors-data' as name, * from hypertable_relation_size('error-data')\n\n\n",
@@ -137,22 +318,27 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "hypertable_relation_size",
+      "title": "hypertable_relation_size [1.x]",
       "transform": "table",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "columns": [],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 26
       },
       "id": 6,
-      "options": {},
       "pageSize": null,
       "showHeader": true,
       "sort": {
@@ -192,12 +378,12 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "timescaledb_information.compressed_hypertable_stats",
+      "title": "timescaledb_information.compressed_hypertable_stats [1.x]",
       "transform": "table",
-      "type": "table"
+      "type": "table-old"
     }
   ],
-  "schemaVersion": 22,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "on_main"
@@ -206,7 +392,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
