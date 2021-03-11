@@ -89,15 +89,6 @@
       "title": "Go runtime",
       "type": "link",
       "url": "/d/xihqdWZWk/go-runtime"
-    },
-    {
-      "icon": "dashboard",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [],
-      "title": "SLA",
-      "type": "link",
-      "url": "/d/sla-xxxx/sla"
     }
   ],
   "panels": [
