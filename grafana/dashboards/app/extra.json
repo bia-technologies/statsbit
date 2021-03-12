@@ -12,10 +12,10 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1565783443926,
+  "iteration": 1615548338727,
   "links": [
     {
       "icon": "dashboard",
@@ -100,6 +100,13 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -131,7 +138,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -149,7 +155,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "name",
+      "tableColumn": "",
       "targets": [
         {
           "format": "table",
@@ -191,7 +197,7 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "first"
     },
     {
       "cacheTimeout": null,
@@ -202,6 +208,13 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -233,7 +246,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -251,7 +263,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "?column?",
+      "tableColumn": "",
       "targets": [
         {
           "format": "table",
@@ -293,13 +305,21 @@
           "value": "null"
         }
       ],
-      "valueName": "avg"
+      "valueName": "first"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -308,30 +328,32 @@
         "x": 0,
         "y": 4
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "alignAsTable": false,
-        "avg": false,
+        "avg": true,
         "current": false,
         "hideEmpty": false,
         "hideZero": false,
         "max": false,
         "min": false,
         "rightSide": false,
-        "show": false,
+        "show": true,
         "sort": "avg",
         "sortDesc": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -387,6 +409,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:269",
           "format": "s",
           "label": null,
           "logBase": 1,
@@ -395,6 +418,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:270",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -413,6 +437,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -421,6 +453,7 @@
         "x": 12,
         "y": 4
       },
+      "hiddenSeries": false,
       "id": 8,
       "legend": {
         "avg": true,
@@ -436,9 +469,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -523,6 +557,13 @@
         "label": "Others",
         "threshold": 0
       },
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
@@ -543,7 +584,6 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "connected",
-      "options": {},
       "pieType": "pie",
       "strokeWidth": 1,
       "targets": [
@@ -581,7 +621,8 @@
       "valueName": "current"
     }
   ],
-  "schemaVersion": 19,
+  "refresh": false,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -591,9 +632,11 @@
         "auto_count": 30,
         "auto_min": "10s",
         "current": {
+          "selected": true,
           "text": "1m",
           "value": "1m"
         },
+        "error": null,
         "hide": 0,
         "label": "Interval",
         "name": "interval",
@@ -656,9 +699,11 @@
       },
       {
         "current": {
-          "text": "7",
-          "value": "7"
+          "selected": false,
+          "text": "3",
+          "value": "3"
         },
+        "error": null,
         "hide": 2,
         "label": null,
         "name": "app_id",
@@ -678,6 +723,7 @@
           "text": "Datastore/operation/MySQL/select",
           "value": "Datastore/operation/MySQL/select"
         },
+        "error": null,
         "hide": 2,
         "label": null,
         "name": "name",
@@ -726,5 +772,5 @@
   "timezone": "",
   "title": "Extra",
   "uid": "ZohJi5iZe",
-  "version": 2
+  "version": 3
 }
