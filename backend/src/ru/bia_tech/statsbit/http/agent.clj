@@ -33,6 +33,7 @@
           req      (update req :body
                            #(case encoding
                               "identity" %
+                              "Identity" % ; FastAPI
                               "deflate"  (InflaterInputStream. %)
                               "gzip"     (GZIPInputStream. %)))]
       (handler req))))
