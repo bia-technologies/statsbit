@@ -32,10 +32,9 @@
     (let [encoding (get-in req [:headers "content-encoding"])
           req      (update req :body
                            #(case encoding
-                              "identity" %
-                              "Identity" % ; FastAPI
-                              "deflate"  (InflaterInputStream. %)
-                              "gzip"     (GZIPInputStream. %)))]
+                              ("identity" "Identity") %
+                              "deflate"               (InflaterInputStream. %)
+                              "gzip"                  (GZIPInputStream. %)))]
       (handler req))))
 
 (defn wrap-decode-body [handler]
