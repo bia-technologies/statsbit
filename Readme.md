@@ -182,7 +182,7 @@ NewRelic::Agent::NewRelicService.prepend NewRelicPatch::NewRelicService
 
 ***
 
-If you have a problem with Grafana migrations, please read this [issue](https://github.com/grafana/grafana/issues/17771#issuecomment-510407530)
+If you have a problem with Grafana migrations, please read this [issue](https://github.com/grafana/grafana/issues/17771#issuecomment-510407530).
 
 
 ## Naming

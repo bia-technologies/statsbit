@@ -1,5 +1,6 @@
 name: Statsbit
 
+
 on:
   push:
     branches: [ master, development ]
@@ -8,9 +9,11 @@ on:
     - 'backend/**'
     - 'grafana/**'
 
+
 defaults:
   run:
     working-directory: backend
+
 
 jobs:
   backend-test:
