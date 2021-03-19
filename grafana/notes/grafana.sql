@@ -1910,14 +1910,21 @@ from "transaction-sample-data-ext" as data
 join servers on servers.id = data."server-id"
 where
   $__timeFilter("start-time")
-  and data."transaction-name" = any(array['$scope', 'WebTransaction/$scope'])
+  and data."app-id" = $app_id
+  and data."transaction-name" = any(array['$scope',
+                                          'WebTransaction/$scope',
+                                          'OtherTransaction/$scope'])
   and data.id = $trace_id
 
 select html
 from "transaction-sample-data-ext" as data
 where
+  -- чтобы индекс использовался, нет индекса по id
   $__timeFilter("start-time")
-  and data."transaction-name" = any(array['$scope', 'WebTransaction/$scope'])
+  and data."app-id" = $app_id
+  and data."transaction-name" = any(array['$scope',
+                                          'WebTransaction/$scope',
+                                          'OtherTransaction/$scope'])
   and data.id = $trace_id
 
 -- Errors
