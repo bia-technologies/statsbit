@@ -88,6 +88,15 @@
       "title": "Go runtime",
       "type": "link",
       "url": "/d/xihqdWZWk/go-runtime"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Transaction traces",
+      "type": "link",
+      "url": "/d/tx-traces/transaction-traces"
     }
   ],
   "panels": [

@@ -1,0 +1,249 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 36,
+  "iteration": 1616420575920,
+  "links": [
+    {
+      "icon": "dashboard",
+      "includeVars": false,
+      "tags": [],
+      "title": "Apps",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/S1KEdWZZk/apps"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Web",
+      "type": "link",
+      "url": "/d/yihqdWZWk/web"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Background",
+      "type": "link",
+      "url": "/d/w_DQlcWZz/background"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Errors",
+      "type": "link",
+      "url": "/d/errors-x/errors"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Databases",
+      "type": "link",
+      "url": "/d/yihqdWZWs/databases"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "External",
+      "type": "link",
+      "url": "/d/yihqdWZWa/external"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Ruby VMs",
+      "type": "link",
+      "url": "/d/fSeYthmZk/ruby-wms"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Go runtime",
+      "type": "link",
+      "url": "/d/xihqdWZWk/go-runtime"
+    },
+    {
+      "icon": "dashboard",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "title": "Transaction traces",
+      "type": "link",
+      "url": "/d/tx-traces/transaction-traces"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".+_duration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transaction-name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "/d/tx-trace/transaction-trace?var-app_id=${app_id}&var-scope=${__data.fields.transaction-name}﻿&var-trace_id=${__data.fields.id}﻿&from=${__from}&to=${__to}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 731
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 23,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "max_duration"
+          }
+        ]
+      },
+      "pluginVersion": "7.2.0",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select \n last(id, duration) as id,\n \"transaction-name\",\n last(duration, duration) as max_duration,\n count(*) as count\nfrom \"transaction-sample-data-ext\"\nwhere \n$__timeFilter(\"start-time\")\nand \"app-id\" = $app_id\ngroup by \"transaction-name\"",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "\"analytic-event-data\"",
+          "timeColumn": "\"timestamp\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Table",
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "10",
+          "value": "10"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "app_id",
+        "options": [
+          {
+            "selected": false,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Transaction traces",
+  "uid": "tx-traces",
+  "version": 9
+}
