@@ -108,8 +108,8 @@ NEW_RELIC_BROWSER_MONITORING_AUTO_INSTRUMENT=false
 ```
 STATSBIT_GRAFANA_DATASOURCE_URL=1.1.1.1:5432
 STATSBIT_GRAFANA_DATASOURCE_DATABASE=statsbit_db
-STATSBIT_GRAFANA_DATASOURCE_USER=statsbit_user
-STATSBIT_GRAFANA_DATASOURCE_PASSWORD=statsbit_password
+STATSBIT_GRAFANA_DATASOURCE_USER=statsbit_grafana_user
+STATSBIT_GRAFANA_DATASOURCE_PASSWORD=statsbit_grafana_password
 
 STATSBIT_GRAFANA_DATASOURCE_MAX_OPEN_CONNS=4
 STATSBIT_GRAFANA_DATASOURCE_MAX_IDLE_CONNS=2
@@ -122,6 +122,12 @@ GF_DATABASE_HOST=1.1.1.1:5432
 GF_DATABASE_NAME=grafana_db
 GF_DATABASE_USER=grafana_user
 GF_DATABASE_PASSWORD=grafana_password
+```
+
+Also you should set statement timeout for `statsbit_grafana_user`:
+
+```sql
+ALTER ROLE statsbit_grafana_user SET statement_timeout=120000;
 ```
 
 Please check out other [Grafana's settings](https://grafana.com/docs/grafana/latest/administration/configuration/). For example, you can configure LDAP.
@@ -151,6 +157,13 @@ NEW_RELIC_LOG_LEVEL=debug # or 'info'
 
 ## Tips
 
+```sql
+-- Drop all chunks older than 3 months ago:
+SELECT drop_chunks(interval '3 months');
+```
+
+***
+
 If you can't use an SSL certificate and you use the ruby agent, then you can disable this requirement by monkey-patching:
 
 ```ruby
@@ -166,7 +179,9 @@ end
 NewRelic::Agent::NewRelicService.prepend NewRelicPatch::NewRelicService
 ```
 
-If you have a problem with Grafana migrations, please read this [issue](https://github.com/grafana/grafana/issues/17771#issuecomment-510407530)
+***
+
+If you have a problem with Grafana migrations, please read this [issue](https://github.com/grafana/grafana/issues/17771#issuecomment-510407530).
 
 
 ## Naming
