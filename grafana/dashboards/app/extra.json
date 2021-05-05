@@ -329,7 +329,7 @@
         },
         "overrides": []
       },
-      "fill": 1,
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
@@ -376,7 +376,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\n  $__timeGroup(point, $interval, 0),\n  sum(\"total-exclusive-time\") / sum(\"call-count\") as value\nfrom \"metric-data-ext\"\nwhere\n  $__timeFilter(point)\n  and \"app-id\" = $app_id\n  and scope = ''\n  and name = '$name'\ngroup by time\norder by time",
+          "rawSql": "select\n  $__timeGroup(point, $interval, 0),\n  sum(\"total-call-time\") / sum(\"call-count\") as avg,\n  max(\"max-call-time\") as max,\n  min(\"min-call-time\") as min\nfrom \"metric-data-ext\"\nwhere\n  $__timeFilter(point)\n  and \"app-id\" = $app_id\n  and scope = ''\n  and name = '$name'\ngroup by time\norder by time",
           "refId": "A",
           "select": [
             [
