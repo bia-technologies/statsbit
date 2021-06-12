@@ -16,7 +16,7 @@
   (:require
    [ring.util.http-response :as ring.resp]
    [jsonista.core :as json]
-
+   [clojure.string :as str]
    [ru.bia-tech.statsbit.commands.connect :as connect]
    [ru.bia-tech.statsbit.commands.metric-data :as metric-data]
    [ru.bia-tech.statsbit.commands.transaction-sample-data :as transaction-sample-data]
@@ -73,7 +73,15 @@
 (defmethod handler "preconnect" [req]
   ;; для ruby клиента можно не делать редирект,
   ;; а для python необходимо, поэтому отправляем на тот же адрес
-  (let [host (get-in req [:headers "host"])]
+
+  ;; бывает, что прилетает "host:port", и java агенту сносит крышу
+  ;; в логах появляется что-то вроде:
+  ;; Malformed IPv6 address at index 9: https://[your-host.com:443]:443/agent_listener/invoke_raw_method
+
+  (let [host (-> req
+                 (get-in [:headers "host"])
+                 (str/split #":")
+                 first)]
     (ring.resp/ok {:return_value {:redirect_host host}})))
 
 (defmethod handler "connect" [req]
