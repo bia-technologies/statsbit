@@ -911,18 +911,196 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "hiddenSeries": false,
+      "id": 20,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "current",
+          "color": "#56A64B"
+        },
+        {
+          "alias": "-1 day",
+          "color": "#F2CC0C",
+          "dashes": true
+        },
+        {
+          "alias": "-1 week",
+          "color": "#E02F44",
+          "dashes": true
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select\n  time,\n  (s + t/2) / (s + t + f) as val,\n  'current' as metric\nfrom (\n  select\n    $__timeGroup(point, $interval, 0),\n    sum(\"call-count\") as s,\n    sum(\"total-call-time\") as t,\n    sum(\"total-exclusive-time\") as f\n  from \"metric-data-ext\"\n  where\n    point between\n      $__timeFrom()::timestamptz\n      and\n      $__timeTo()::timestamptz\n    and \"app-id\" = $app_id\n    and scope = ''\n    and name = replace('$scope', 'Controller/', 'Apdex/')\n  group by time\n) as res\nunion all\nselect\n  time,\n  (s + t/2) / (s + t + f) as val,\n  '-1 day' as metric\nfrom (\n  select\n    $__timeGroup(point + interval '1 day', $interval, 0),\n    sum(\"call-count\") as s,\n    sum(\"total-call-time\") as t,\n    sum(\"total-exclusive-time\") as f\n  from \"metric-data-ext\"\n  where\n    point between\n      $__timeFrom()::timestamptz - interval '1 day'\n      and\n      $__timeTo()::timestamptz - interval '1 day'\n    and \"app-id\" = $app_id\n    and scope = ''\n    and name = replace('$scope', 'Controller/', 'Apdex/')\n  group by time\n) as res\nunion all\nselect\n  time,\n  (s + t/2) / (s + t + f) as val,\n  '-1 week' as metric\nfrom (\n  select\n    $__timeGroup(point + interval '1 week', $interval, 0),\n    sum(\"call-count\") as s,\n    sum(\"total-call-time\") as t,\n    sum(\"total-exclusive-time\") as f\n  from \"metric-data-ext\"\n  where\n    point between\n      $__timeFrom()::timestamptz - interval '1 week'\n      and\n      $__timeTo()::timestamptz - interval '1 week'\n    and \"app-id\" = $app_id\n    and scope = ''\n    and name = replace('$scope', 'Controller/', 'Apdex/')\n  group by time\n) as res\n\norder by time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "custom",
+          "fill": false,
+          "fillColor": "rgba(50, 116, 217, 0.2)",
+          "line": true,
+          "lineColor": "rgba(31, 96, 196, 0.6)",
+          "op": "lt",
+          "value": 0.5,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "custom",
+          "fill": false,
+          "fillColor": "rgba(50, 116, 217, 0.2)",
+          "line": true,
+          "lineColor": "rgba(31, 96, 196, 0.6)",
+          "op": "lt",
+          "value": 0.7,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "custom",
+          "fill": false,
+          "fillColor": "rgba(50, 116, 217, 0.2)",
+          "line": true,
+          "lineColor": "rgba(31, 96, 196, 0.6)",
+          "op": "lt",
+          "value": 0.85,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "custom",
+          "fill": false,
+          "fillColor": "rgba(50, 116, 217, 0.2)",
+          "line": true,
+          "lineColor": "rgba(31, 96, 196, 0.6)",
+          "op": "lt",
+          "value": 0.94,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Apdex",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": "1",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "columns": [],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 19,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 40
       },
       "id": 2,
       "links": [],
-      "options": {},
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
